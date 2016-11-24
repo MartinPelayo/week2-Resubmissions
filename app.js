@@ -1,7 +1,44 @@
 'use strict';
 //global
 var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12am', '1pm', '2pm', '3pm', '4pm', '5pm', '7pm', '8pm'];
+var stores = [
+  new CookieStore('1st and Pike', 23, 65, 6.3),
+  new CookieStore('SeaTeac Airport', 3, 34, 1.2),
+  new CookieStore('Seattle Center', 11, 38, 3.7),
+  new CookieStore('Capitol Hill', 20, 38, 2.3),
+  new CookieStore('Alki', 2, 16, 4.6)
+];
 
+function renderTfootRow() {
+  var elTfoot = document.getElementById('tfoot');
+
+  var elTr = document.createElement('tr');
+  elTfoot.appendChild(elTr);
+
+  var elTd = document.createElement('td');
+  elTd.textContent = 'Totals';
+  elTr.appendChild(elTd);
+
+  var hourTotal;
+  var dailyTotal = 0;
+
+  for (var i = 0; i < storeHours.length; i++){
+    hourTotal = 0;
+    elTd = document.createElement('td');
+
+    for(var j = 0; j < stores.length; j++){
+      hourTotal += stores[j].cookiesPurchased[i];
+    }
+    dailyTotal += hourTotal;
+
+    elTd.textContent = hourTotal;
+    elTr.appendChild(elTd);
+  }
+
+  elTd = document.createElement('td');
+  elTd.textContent = dailyTotal;
+  elTr.appendChild(elTd);
+}
 
 function renderTheadRow() {
   var elThead = document.getElementById('thead');
@@ -81,18 +118,37 @@ CookieStore.prototype.toHtml = function () {
 
 };
 
+function handleSubmit(event){
+  event.preventDefault();
+
+
+  var storeName = event.target.storeName.value;
+  var minCust = event.target.minCust.value;
+  var maxCust = event.target.maxCust.value;
+  var avgCookieSale = event.target.avgCookieSale.value;
+
+
+  var newStore = new CookieStore(storeName, minCust, maxCust, avgCookieSale);
+  stores.push(newStore);
+  newStore.toHtml();
+
+  event.target.reset();
+}
+
+
+
+
+var elForm = document.getElementById('form');
+elForm.addEventListener('submit', handleSubmit);
+
+
 //call the methods
 renderTheadRow();
 
-var stores = [
-  new CookieStore('1st and Pike', 23, 65, 6.3),
-  new CookieStore('SeaTeac Airport', 3, 34, 1.2),
-  new CookieStore('Seattle Center', 11, 38, 3.7),
-  new CookieStore('Capitol Hill', 20, 38, 2.3),
-  new CookieStore('Alki', 2, 16, 4.6)
-];
 
 
 for (var i = 0; i < stores.length; i++) {
   stores[i].toHtml();
 }
+
+renderTfootRow();
