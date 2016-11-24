@@ -60,7 +60,7 @@ var cookieStore1 = {
 
 
 var cookieStore2 = {
-  name: 'seaTeac Airport',
+  name: 'SeaTeac Airport',
   storeHours: ['6am', '7am', '8am', '9am', '10am', '11am', '12am', '1pm', '2pm', '3pm', '4pm', '5pm', '7pm', '8pm'],
   minCust: 3,
   maxCust: 24,
