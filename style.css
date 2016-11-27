@@ -54,8 +54,8 @@ position: relative;
 
 #shirttext {
   position:absolute;
-  left:0px;
-  top:100px;
+  left:20px;
+  top:190px;
 }
 body {
   background-repeat: no-repeat;
